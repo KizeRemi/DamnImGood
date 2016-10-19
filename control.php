@@ -59,14 +59,14 @@
 			empty($_POST['verif_pass']) ? $tab_error["verif_pass"] = display_error("verif_pass", "verification mot de passe",0) : ($_POST["verif_pass"] == $pass) ? $verif_pass= $_POST["pass"] : $tab_error["verif_pass"] = display_error("verification mot de passe",6);
 			empty($_POST['gender']) ? $tab_error["gender"] = display_error("sexe",0) : $gender= $_POST["gender"];
 			empty($_POST['texte']) ? $tab_error["texte"] =  display_error("texte",0) : $texte= $_POST["texte"];
-			empty($_POST['livre']) ? $tab_error["livre"] =  display_error("livre",0) : (count($_POST['livre']) <3) ? $livre= $_POST["livre"] : $tab_error["livre"] = display_error("livre",7);
+			if(isset($_POST['livre']))
+				empty($_POST['livre']) ? $tab_error["livre"] =  display_error("livre",0) : (count($_POST['livre']) <3) ? $livre= $_POST["livre"] : $tab_error["livre"] = display_error("livre",7);
 		}
 
 		?>
 
 		<form method="POST" action="control.php">
 			<table>
-
 				<tr><td colspan="3"><?php if(isset($tab_error["data"])) echo $tab_error["data"] ?></td></tr>
 				<tr>
 					<td>Prénom:</td><td><input type="text" name="prenom"></td><td><?php if(isset($tab_error["prenom"])) echo $tab_error["prenom"] ?></td>
