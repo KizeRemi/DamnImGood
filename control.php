@@ -59,8 +59,15 @@
 			empty($_POST['verif_pass']) ? $tab_error["verif_pass"] = display_error("verif_pass", "verification mot de passe",0) : ($_POST["verif_pass"] == $pass) ? $verif_pass= $_POST["pass"] : $tab_error["verif_pass"] = display_error("verification mot de passe",6);
 			empty($_POST['gender']) ? $tab_error["gender"] = display_error("sexe",0) : $gender= $_POST["gender"];
 			empty($_POST['texte']) ? $tab_error["texte"] =  display_error("texte",0) : $texte= $_POST["texte"];
-			if(isset($_POST['livre']))
-				empty($_POST['livre']) ? $tab_error["livre"] =  display_error("livre",0) : (count($_POST['livre']) <3) ? $livre= $_POST["livre"] : $tab_error["livre"] = display_error("livre",7);
+			if(isset($_POST['livre']) == false){
+				$tab_error["livre"] =  display_error("livre",0) ;
+			}
+			else if (count($_POST['livre']) < 3){
+				$livre= $_POST["livre"];
+			}
+			else{
+				$tab_error["livre"] = display_error("livre",7);
+			}
 		}
 
 		?>
@@ -69,19 +76,19 @@
 			<table>
 				<tr><td colspan="3"><?php if(isset($tab_error["data"])) echo $tab_error["data"] ?></td></tr>
 				<tr>
-					<td>Prénom:</td><td><input type="text" name="prenom"></td><td><?php if(isset($tab_error["prenom"])) echo $tab_error["prenom"] ?></td>
+					<td>Prénom:</td><td><input type="text" name="prenom" value="<?php if(isset($_POST['prenom']))echo $_POST['prenom'] ?>" ></td><td><?php if(isset($tab_error["prenom"])) echo $tab_error["prenom"] ?></td>
 				</tr>
 				<tr>
-					<td>Nom: </td><td><input type="text" name="nom"></td><td><?php  if(isset($tab_error["nom"])) echo $tab_error["nom"] ?></td>
+					<td>Nom: </td><td><input type="text" value="<?php if(isset($_POST['nom'])) echo $_POST['nom'] ?>" name="nom"></td><td><?php  if(isset($tab_error["nom"])) echo $tab_error["nom"] ?></td>
 				</tr>
 				<tr>
-					<td>E-mail: </td><td><input type="text" name="email"></td><td><?php  if(isset($tab_error["email"])) echo $tab_error["email"] ?></td>
+					<td>E-mail: </td><td><input type="text" value="<?php if(isset($_POST['email']))echo $_POST['email'] ?>" name="email"></td><td><?php  if(isset($tab_error["email"])) echo $tab_error["email"] ?></td>
 				</tr>
 				<tr>
-					<td>Age: </td><td><input type="text" name="age"></td><td><?php  if(isset($tab_error["age"])) echo $tab_error["age"] ?></td>
+					<td>Age: </td><td><input type="text" value="<?php if(isset($_POST['age']))echo $_POST['age'] ?>" name="age"></td><td><?php  if(isset($tab_error["age"])) echo $tab_error["age"] ?></td>
 				</tr>
 				<tr> 
-					<td>Diplôme:</td><td> <input type="text" name="bachelor"></td><td><?php  if(isset($tab_error["bachelor"])) echo $tab_error["bachelor"] ?></td>
+					<td>Diplôme:</td><td> <input type="text" value="<?php if(isset($_POST['bachelor']))echo $_POST['bachelor'] ?>" name="bachelor"></td><td><?php  if(isset($tab_error["bachelor"])) echo $tab_error["bachelor"] ?></td>
 				</tr>
 				<tr>
 					<td>Mots de passe: </td><td><input type="password" name="pass"></td><td><?php  if(isset($tab_error["pass"])) echo $tab_error["pass"] ?></td>
@@ -90,20 +97,26 @@
 					<td>Verifier mots de passe:</td><td> <input type="password" name="verif_pass"></td><td><?php  if(isset($tab_error["verif_pass"])) echo $tab_error["verif_pass"] ?></td>
 				</tr>
 				<tr>
-				<td>Sexe:</td><td> <input type= "radio" name="gender" value="Homme"> Homme
-					  	 		   <input type= "radio" name="gender" value="Femme"> Femme</td><td><?php  if(isset($tab_error["gender"])) echo $tab_error["gender"] ?></td>
+				<?php if(!empty($_POST['gender'])){
+					$gender= $_POST['gender'];
+				} else {
+					$gender = "";
+				}
+				?>
+				<td>Sexe:</td><td> <input type= "radio" name="gender" value="Homme" <?php if($gender == "Homme") echo "checked" ?> > Homme
+					  	 		   <input type= "radio" name="gender" value="Femme" <?php if($gender == "Femme") echo "checked" ?>  > Femme</td><td><?php  if(isset($tab_error["gender"])) echo $tab_error["gender"] ?></td>
 				</tr>
 				<tr>
-					<td>Texte: </td><td><textarea name="texte" rows="4" cols="15" placeholder="Ecrire un commentaire..."></textarea></td><td><?php  if(isset($tab_error["texte"])) echo $tab_error["texte"] ?></td>
+					<td>Texte: </td><td><textarea name="texte" rows="4" cols="15" placeholder="Ecrire un commentaire..." ><?php if(isset($_POST['texte']))echo $_POST['texte'] ?></textarea></td><td><?php  if(isset($tab_error["texte"])) echo $tab_error["texte"] ?></td>
 				</tr>
 				<tr>
 					<td>Selectionner vos volumes préférés<br> de la trilogie du voyageur galactique</td>
 					<td>
-					<input type="checkbox" name="livre[]" value="Le Guide du voyageur galactique"> Le Guide du voyageur galactique<br>
-					<input type="checkbox" name="livre[]" value="Le Dernier Restaurant avant la fin du monde"> Le Dernier Restaurant avant la fin du monde<br>
-					<input type="checkbox" name="livre[]" value="La Vie, l\'Univers et le Reste"> La Vie, l'Univers et le Reste<br>
-					<input type="checkbox" name="livre[]" value="Salut, et encore merci pour le poisson"> Salut, et encore merci pour le poisson<br>
-					<input type="checkbox" name="livre[]" value="Globalement inoffensive"> Globalement inoffensive<br></td><br><td><?php  if(isset($tab_error["livre"])) echo $tab_error["livre"] ?></td>
+					<input type="checkbox" name="livre[1]" value="Le Guide du voyageur galactique" <?php if(isset($_POST['livre'][1]))echo "checked" ?> > Le Guide du voyageur galactique<br>
+					<input type="checkbox" name="livre[2]" value="Le Dernier Restaurant avant la fin du monde" <?php if(isset($_POST['livre'][2]))echo "checked" ?>> Le Dernier Restaurant avant la fin du monde<br>
+					<input type="checkbox" name="livre[3]" value="La Vie, l\'Univers et le Reste" <?php if(isset($_POST['livre'][3]))echo "checked" ?>> La Vie, l'Univers et le Reste<br>
+					<input type="checkbox" name="livre[4]" value="Salut, et encore merci pour le poisson" <?php if(isset($_POST['livre'][4]))echo "checked" ?>> Salut, et encore merci pour le poisson<br>
+					<input type="checkbox" name="livre[5]" value="Globalement inoffensive" <?php if(isset($_POST['livre'][5]))echo "checked" ?>> Globalement inoffensive<br></td><br><td><?php  if(isset($tab_error["livre"])) echo $tab_error["livre"] ?></td>
 				</tr>
 				<tr>
 					<td></td><td><input type="submit" name="send"></td>
@@ -114,7 +127,7 @@
 			echo "
 			<table border='1'>
 				<tr>
-					<td>Nom:</td><td>$nom></td>
+					<td>Nom:</td><td>$nom</td>
 				</tr>
 				<tr>
 					<td>Prénom:</td><td>$prenom</td>
