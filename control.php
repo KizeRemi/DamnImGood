@@ -110,46 +110,49 @@
 				</tr>
 			</table>
 		</form>
-		<table border="1">
-			<tr>
-				<td>Nom:</td><td><?php if(isset($nom)) echo $nom; ?></td>
-			</tr>
-			<tr>
-				<td>Prénom:</td><td><?php if(isset($prenom))echo $prenom ?></td>
-			</tr>
-			<tr>
-				<td>E-mail:</td><td><?php if(isset($email)) echo $email ?></td>
-			</tr>
-			<tr>
-				<td>Bachelor:</td><td><?php if(isset($bachelor)) echo $bachelor ?></td>
-			</tr>
-			<tr>
-				<td>Age:</td><td><?php if(isset($age))echo $age ?></td>
-			</tr>
-			<tr>
-				<td>Mot de passe:</td><td><?php if(isset($pass)) echo $pass ?></td>
-			</tr>
-			<tr>
-				<td>Sexe:</td><td><?php if(isset($gender)) echo $gender ?></td>
-			</tr>
-			<tr>
-				<td>Texte:</td><td><?php if(isset($texte)) echo $texte ?></td>
-			</tr>
-			<tr>
-				<td>Livres préférés:</td>
-				<td>
-				<?php 
-				if(isset($livre)){
-					foreach ($livre as $key => $value) {
-						if($key != 0){
-							echo ", ";
+		<?php if(!isset($tab_error) && isset($_POST["send"])) {
+			echo "
+			<table border='1'>
+				<tr>
+					<td>Nom:</td><td>$nom></td>
+				</tr>
+				<tr>
+					<td>Prénom:</td><td>$prenom</td>
+				</tr>
+				<tr>
+					<td>E-mail:</td><td>$email</td>
+				</tr>
+				<tr>
+					<td>Bachelor:</td><td>$bachelor</td>
+				</tr>
+				<tr>
+					<td>Age:</td><td>$age</td>
+				</tr>
+				<tr>
+					<td>Mot de passe:</td><td>$pass</td>
+				</tr>
+				<tr>
+					<td>Sexe:</td><td>$gender</td>
+				</tr>
+				<tr>
+					<td>Texte:</td><td>$texte</td>
+				</tr>
+				<tr>
+					<td>Livres préférés:</td>
+					<td>";
+					if(isset($livre)){
+						foreach ($livre as $key => $value) {
+							if($key != 0){
+								echo ", ";
+							}
+							echo $value;
 						}
-						echo $value;
 					}
-				}
-				?>
-				</td>
-			</tr>
-		</table>
+					echo"
+					</td>
+				</tr>
+			</table>";
+		}
+		?>
 	</body>
 </html>
